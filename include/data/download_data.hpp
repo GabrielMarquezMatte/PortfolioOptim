@@ -4,22 +4,35 @@
 #include "date_utils.hpp"
 #include <iostream>
 #include <format>
+#include <vector>
 namespace portfolio_optimizer::data
 {
-    class DownloadData
+    static datetime date_util;
+    class YahooStockData
     {
     public:
-        DownloadData();
-        ~DownloadData();
-        const std::string download_yahoo_data(const std::string &symbol,
-                                              const std::time_t& start = date_util.add_time(date_util.now(), -5),
-                                              const std::time_t& end = date_util.now());
-
-    private:
-        CURL *curl;
-        CURLcode res;
-        size_t WriteCallback(char *contents, size_t size, size_t nmemb, std::string *userp);
-        const std::string url = "https://query1.finance.yahoo.com/v7/finance/download/{}?period1={}&period2={}&interval=1d&events=history&includeAdjustedClose=true";
-        static datetime date_util;
+        std::string symbol;
+        std::vector<std::time_t> date;
+        std::vector<double> open;
+        std::vector<double> high;
+        std::vector<double> low;
+        std::vector<double> close;
+        std::vector<double> adj_close;
+        std::vector<double> volume;
+        enum class ReturnColumn
+        {
+            Open,
+            High,
+            Low,
+            Close,
+            AdjClose,
+            Volume
+        };
+        std::vector<double> get_return(ReturnColumn column);
+        std::string to_string();
+        void reserve(size_t size);
     };
+    const YahooStockData download_yahoo_data(const std::string &symbol,
+                                             const std::time_t &start = date_util.add_time(date_util.now(), -5),
+                                             const std::time_t &end = date_util.now());
 }
