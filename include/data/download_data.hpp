@@ -32,7 +32,8 @@ namespace portfolio_optimizer::data
         std::string to_string();
         void reserve(size_t size);
     };
-    const YahooStockData download_yahoo_data(const std::string &symbol,
-                                             const std::time_t &start = date_util.add_time(date_util.now(), -5),
-                                             const std::time_t &end = date_util.now());
+    YahooStockData download_yahoo_data(const std::string &symbol,
+                                       const std::time_t &start = date_util.add_time(date_util.now(), -5),
+                                       const std::time_t &end = date_util.now(),
+                                       const bool verbose = false);
 }

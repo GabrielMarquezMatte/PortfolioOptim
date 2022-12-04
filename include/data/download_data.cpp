@@ -95,7 +95,7 @@ namespace portfolio_optimizer::data
         userp->append(contents, size * nmemb);
         return size * nmemb;
     }
-    const YahooStockData download_yahoo_data(const std::string &symbol, const std::time_t &start, const std::time_t &end)
+    YahooStockData download_yahoo_data(const std::string &symbol, const std::time_t &start, const std::time_t &end,const bool verbose)
     {
         std::string readBuffer;
         CURL *curl = curl_easy_init();
@@ -107,9 +107,18 @@ namespace portfolio_optimizer::data
             curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, &WriteCallback);
             curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
             res = curl_easy_perform(curl);
-            if (res != CURLE_OK)
+            int http_code = 0;
+            curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &http_code);
+            if (res != CURLE_OK || http_code != 200)
             {
                 std::cout << "curl_easy_perform() failed: " << curl_easy_strerror(res) << "\n";
+                std::cout << "http_code: " << http_code << "\n";
+                std::cout << "url: " << url_formatted << "\n";
+                throw std::runtime_error("curl_easy_perform() failed");
+            }
+            if(verbose)
+            {
+                std::cout << "Downloaded data for " << symbol << " from " << date_util.to_string(start) << " to " << date_util.to_string(end) << "\n";
             }
             curl_easy_cleanup(curl);
         }
