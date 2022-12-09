@@ -1,10 +1,5 @@
 #pragma once
-#include <curl/curl.h>
-#include <string>
 #include "date_utils.hpp"
-#include <iostream>
-#include <format>
-#include <vector>
 namespace portfolio_optimizer::data
 {
     static datetime date_util;

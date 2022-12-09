@@ -2,6 +2,9 @@
 #include <vector>
 #include <string>
 #include <stdexcept>
+#include <unordered_map>
+#include <thread>
+#include <iostream>
 namespace portfolio_optimizer::optimization
 {
     template <typename T, typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type>
@@ -214,7 +217,7 @@ namespace portfolio_optimizer::optimization
             Matrix<T> U(rows, cols);
             for (size_t i = 0; i < rows; i++)
             {
-                for (int k = i; k < cols; k++)
+                for (size_t k = i; k < cols; k++)
                 {
                     T sum = 0;
                     for (size_t j = 0; j < i; j++)
@@ -223,7 +226,7 @@ namespace portfolio_optimizer::optimization
                     }
                     U(i, k) = data[i * cols + k] - sum;
                 }
-                for (int k = i; k < rows; k++)
+                for (size_t k = i; k < rows; k++)
                 {
                     if (i == k)
                     {
@@ -273,7 +276,7 @@ namespace portfolio_optimizer::optimization
                             }
                         }
                     }
-                    result(i, j) = submatrix.determinant() * pow(-1, i + j);
+                    result(i, j) = submatrix.determinant() * pow(-1, static_cast<int>(i + j));
                 }
             }
             return result;

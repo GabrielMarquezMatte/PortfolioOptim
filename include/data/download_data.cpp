@@ -1,4 +1,9 @@
 #include "download_data.hpp"
+#include <curl/curl.h>
+#include <string>
+#include <iostream>
+#include <format>
+#include <vector>
 namespace portfolio_optimizer::data
 {
     std::vector<double> YahooStockData::get_return(ReturnColumn column)
@@ -28,10 +33,6 @@ namespace portfolio_optimizer::data
             case ReturnColumn::Volume:
                 r = (volume[i] - volume[i - 1]) / volume[i - 1];
                 break;
-            }
-            if (r < 0)
-            {
-                r = -r;
             }
             result.push_back(r);
         }
