@@ -112,7 +112,11 @@ namespace portfolio_optimizer::data
         if (curl)
         {
             CURLcode res;
+#ifdef _WIN32
             std::string url_formatted = std::format("https://query1.finance.yahoo.com/v7/finance/download/{}?period1={}&period2={}&interval=1d&events=history&includeAdjustedClose=true", symbol, start, end);
+#else
+            std::string url_formatted = fmt::format("https://query1.finance.yahoo.com/v7/finance/download/{}?period1={}&period2={}&interval=1d&events=history&includeAdjustedClose=true", symbol, start, end);
+#endif
             curl_easy_setopt(curl, CURLOPT_URL, url_formatted.c_str());
             curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, &WriteCallback);
             curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
