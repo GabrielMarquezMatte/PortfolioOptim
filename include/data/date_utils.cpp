@@ -60,9 +60,14 @@ namespace portfolio_optimizer::data
         {
             std::time_t t = time.value();
             std::tm* tm = new std::tm();
+            #ifdef _WIN32
             localtime_s(tm, &t);
+            #else
+            tm = std::localtime(&t);
+            #endif
             char buffer[80];
             std::strftime(buffer, sizeof(buffer), format.c_str(), tm);
+            delete tm;
             return std::string(buffer);
         }
         else if (time_string.has_value())
