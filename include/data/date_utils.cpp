@@ -59,12 +59,12 @@ namespace portfolio_optimizer::data
         if (time.has_value())
         {
             std::time_t t = time.value();
-            std::tm* tm = new std::tm();
-            #ifdef _WIN32
+            std::tm *tm = new std::tm();
+#ifdef _WIN32
             localtime_s(tm, &t);
-            #else
+#else
             tm = std::localtime(&t);
-            #endif
+#endif
             char buffer[80];
             std::strftime(buffer, sizeof(buffer), format.c_str(), tm);
             delete tm;
@@ -85,7 +85,11 @@ namespace portfolio_optimizer::data
         {
             std::time_t t = time.value();
             std::tm *tm = new std::tm();
+#ifdef _WIN32
             localtime_s(tm, &(time.value()));
+#else
+            tm = std::localtime(&(time.value()));
+#endif
             char buf[80];
             std::strftime(buf, sizeof(buf), format, tm);
             return std::string(buf);
@@ -102,7 +106,11 @@ namespace portfolio_optimizer::data
     std::string datetime::to_string(const std::time_t &time)
     {
         std::tm *tm = new std::tm();
+#ifdef _WIN32
         localtime_s(tm, &time);
+#else
+        tm = std::localtime(&time);
+#endif
         char buf[80];
         std::strftime(buf, sizeof(buf), "%Y-%m-%d", tm);
         return std::string(buf);
@@ -110,7 +118,11 @@ namespace portfolio_optimizer::data
     std::string datetime::to_string(const std::time_t &time, const std::string &format)
     {
         std::tm *tm = new std::tm();
+#ifdef _WIN32
         localtime_s(tm, &time);
+#else
+        tm = std::localtime(&time);
+#endif
         std::unique_ptr<char[]> buf(new char[format.length() + 1]);
         std::strftime(buf.get(), sizeof(buf.get()), format.c_str(), tm);
         return std::string(buf.get());
@@ -118,7 +130,11 @@ namespace portfolio_optimizer::data
     std::string datetime::to_string(const std::time_t &time, const char *format)
     {
         std::tm *tm = new std::tm();
+#ifdef _WIN32
         localtime_s(tm, &time);
+#else
+        tm = std::localtime(&time);
+#endif
         char buf[80];
         std::strftime(buf, sizeof(buf), format, tm);
         return std::string(buf);
@@ -129,7 +145,11 @@ namespace portfolio_optimizer::data
         {
             std::time_t t = time.value();
             std::tm *tm = new std::tm();
+#ifdef _WIN32
             localtime_s(tm, &t);
+#else
+            tm = std::localtime(&t);
+#endif
             char buf[80];
             std::strftime(buf, sizeof(buf), "%Y-%m-%d", tm);
             return std::string(buf);
@@ -152,7 +172,11 @@ namespace portfolio_optimizer::data
                                    const int &minutes, const int &seconds)
     {
         std::tm *tm = new std::tm();
+#ifdef _WIN32
         localtime_s(tm, &time);
+#else
+        tm = std::localtime(&time);
+#endif
         tm->tm_year += years;
         tm->tm_mon += months;
         tm->tm_mday += days;
