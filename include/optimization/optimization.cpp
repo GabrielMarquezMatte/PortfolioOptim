@@ -1,5 +1,6 @@
 #include "optimization.hpp"
 #include <cmath>
+#include <thread>
 namespace portfolio_optimizer::optimization
 {
     double calculate_mean(const std::vector<double> &x)
