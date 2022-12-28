@@ -2,7 +2,11 @@
 #include <curl/curl.h>
 #include <string>
 #include <iostream>
+#ifdef _WIN32
 #include <format>
+#else
+#include <fmt/format.h>
+#endif
 #include <vector>
 namespace portfolio_optimizer::data
 {
@@ -43,7 +47,11 @@ namespace portfolio_optimizer::data
         std::string result;
         for (int i = 0; i < date.size(); i++)
         {
+#ifdef _WIN32
             result += std::format("{} {} {} {} {} {} {} {}\n", symbol, date_util.to_string(date[i]), open[i], high[i], low[i], close[i], adj_close[i], volume[i]);
+#else
+            result += fmt::format("{} {} {} {} {} {} {} {}\n", symbol, date_util.to_string(date[i]), open[i], high[i], low[i], close[i], adj_close[i], volume[i]);
+#endif
         }
         return result;
     }
@@ -96,7 +104,7 @@ namespace portfolio_optimizer::data
         userp->append(contents, size * nmemb);
         return size * nmemb;
     }
-    YahooStockData download_yahoo_data(const std::string &symbol, const std::time_t &start, const std::time_t &end,const bool verbose)
+    YahooStockData download_yahoo_data(const std::string &symbol, const std::time_t &start, const std::time_t &end, const bool verbose)
     {
         std::string readBuffer;
         CURL *curl = curl_easy_init();
@@ -117,7 +125,7 @@ namespace portfolio_optimizer::data
                 std::cout << "url: " << url_formatted << "\n";
                 throw std::runtime_error("curl_easy_perform() failed");
             }
-            if(verbose)
+            if (verbose)
             {
                 std::cout << "Downloaded data for " << symbol << " from " << date_util.to_string(start) << " to " << date_util.to_string(end) << "\n";
             }
