@@ -92,6 +92,7 @@ namespace portfolio_optimizer::data
 #endif
             char buf[80];
             std::strftime(buf, sizeof(buf), format, tm);
+            delete tm;
             return std::string(buf);
         }
         else if (time_string.has_value())
@@ -113,6 +114,7 @@ namespace portfolio_optimizer::data
 #endif
         char buf[80];
         std::strftime(buf, sizeof(buf), "%Y-%m-%d", tm);
+        delete tm;
         return std::string(buf);
     }
     std::string datetime::to_string(const std::time_t &time, const std::string &format)
@@ -125,6 +127,7 @@ namespace portfolio_optimizer::data
 #endif
         std::unique_ptr<char[]> buf(new char[format.length() + 1]);
         std::strftime(buf.get(), sizeof(buf.get()), format.c_str(), tm);
+        delete tm;
         return std::string(buf.get());
     }
     std::string datetime::to_string(const std::time_t &time, const char *format)
@@ -137,6 +140,7 @@ namespace portfolio_optimizer::data
 #endif
         char buf[80];
         std::strftime(buf, sizeof(buf), format, tm);
+        delete tm;
         return std::string(buf);
     }
     std::string datetime::to_string()
@@ -152,6 +156,7 @@ namespace portfolio_optimizer::data
 #endif
             char buf[80];
             std::strftime(buf, sizeof(buf), "%Y-%m-%d", tm);
+            delete tm;
             return std::string(buf);
         }
         else if (time_string.has_value())
