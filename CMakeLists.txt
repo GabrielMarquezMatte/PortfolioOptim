@@ -8,10 +8,17 @@ enable_testing()
 
 find_package(CURL CONFIG REQUIRED)
 
+if(NOT WIN32)
+    find_package(fmt CONFIG REQUIRED)
+endif()
+
 add_subdirectory(include)
 
 add_executable(${PROJECT_NAME} main.cpp)
 target_link_libraries(${PROJECT_NAME} PRIVATE download_data date_utils optimization CURL::libcurl)
+if(NOT WIN32)
+    target_link_libraries(${PROJECT_NAME} PRIVATE fmt::fmt)
+endif()
 target_include_directories(${PROJECT_NAME} PRIVATE include)
 
 add_test(NAME ${PROJECT_NAME} COMMAND ${PROJECT_NAME})
