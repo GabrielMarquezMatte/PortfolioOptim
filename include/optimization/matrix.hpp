@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include <thread>
 #include <iostream>
+#include <cmath>
 namespace portfolio_optimizer::optimization
 {
     template <typename T, typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type>
@@ -276,7 +277,7 @@ namespace portfolio_optimizer::optimization
                             }
                         }
                     }
-                    result(i, j) = submatrix.determinant() * pow(-1, static_cast<int>(i + j));
+                    result(i, j) = submatrix.determinant() * std::pow(-1, static_cast<int>(i + j));
                 }
             }
             return result;

@@ -1,4 +1,5 @@
 #include "optimization.hpp"
+#include <cmath>
 namespace portfolio_optimizer::optimization
 {
     double calculate_mean(const std::vector<double> &x)
@@ -123,7 +124,7 @@ namespace portfolio_optimizer::optimization
             result.leverage += abs(weights(i, 0));
         }
         result.expected_return = wanted_return;
-        result.volatility = sqrt((weights.transpose() * covariance.submatrix(0, 0, weights.rows, weights.rows) * weights)(0, 0));
+        result.volatility = std::sqrt((weights.transpose() * covariance.submatrix(0, 0, weights.rows, weights.rows) * weights)(0, 0));
         result.lagrange_multipliers = solution.submatrix(solution.rows - 2, 0, 2, 1).as_vector();
         result.sharpe_ratio = (wanted_return - risk_free_rate) / result.volatility;
     }
