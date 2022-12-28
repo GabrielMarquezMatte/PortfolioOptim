@@ -80,6 +80,7 @@
         "complex": "cpp",
         "future": "cpp",
         "condition_variable": "cpp",
-        "xhash": "cpp"
+        "xhash": "cpp",
+        "cinttypes": "cpp"
     }
 }

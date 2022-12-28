@@ -68,12 +68,19 @@ namespace portfolio_optimizer::optimization
         cov.rbind(expected_returns);
         cov.rbind(1);
         std::vector<double> constraints(expected_returns.size() + 2);
-        for (size_t i = 0; i < expected_returns.size(); i++)
+        for (size_t i = 0; i < expected_returns.size()+use_risk_free_rate; i++)
         {
-            constraints[i] = expected_returns[i];
+            if (i < expected_returns.size())
+            {
+                constraints[i] = expected_returns[i];
+            }
+            else
+            {
+                constraints[i] = this->risk_free_rate;
+            }
         }
-        constraints[expected_returns.size()] = 0;
-        constraints[expected_returns.size() + 1] = 0;
+        constraints[expected_returns.size()+use_risk_free_rate] = 0;
+        constraints[expected_returns.size() + 1+use_risk_free_rate] = 0;
         cov.cbind(constraints);
         constraints.clear();
         constraints.resize(cov.rows);

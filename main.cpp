@@ -47,8 +47,8 @@ void OptimizationTest()
         expected_returns[i] = exp((mean / historical_prices[tickers[i]].size())*252)-1;
     }
     optimization::Matrix covariance_matrix = optimization::calculate_covariance_matrix(historical_prices)*252;
-    optimization::Optimization optimization(tickers, historical_prices, expected_returns, 0, covariance_matrix);
-    auto results = optimization.minimum_risk({0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0});
+    optimization::Optimization optimization(tickers, historical_prices, expected_returns, 0.1, covariance_matrix);
+    auto results = optimization.minimum_risk({0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0},false);
     std::string result_string = "";
     for (int i = 0; i < results.size(); i++)
     {
