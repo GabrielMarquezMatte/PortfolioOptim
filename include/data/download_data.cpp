@@ -2,6 +2,7 @@
 #include <curl/curl.h>
 #include <string>
 #include <iostream>
+#include <sstream>
 #ifdef _WIN32
 #include <format>
 #else

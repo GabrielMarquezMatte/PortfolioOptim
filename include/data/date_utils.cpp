@@ -1,4 +1,7 @@
 #include "date_utils.hpp"
+#include <sstream>
+#include <iosfwd>
+#include <iomanip>
 namespace portfolio_optimizer::data
 {
     datetime::datetime()

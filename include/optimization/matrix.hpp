@@ -3,7 +3,6 @@
 #include <string>
 #include <stdexcept>
 #include <unordered_map>
-#include <thread>
 #include <iostream>
 #include <cmath>
 namespace portfolio_optimizer::optimization

@@ -1,5 +1,8 @@
 #pragma once
 #include "date_utils.hpp"
+#include <vector>
+#include <string>
+#include <ctime>
 namespace portfolio_optimizer::data
 {
     static datetime date_util;

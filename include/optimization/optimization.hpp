@@ -1,5 +1,8 @@
 #pragma once
 #include "matrix.hpp"
+#include <unordered_map>
+#include <vector>
+#include <string>
 namespace portfolio_optimizer::optimization
 {
     typedef struct{
